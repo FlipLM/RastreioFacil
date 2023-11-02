@@ -5,56 +5,68 @@ import 'package:provider/provider.dart';
 import '../screens/encomenda_model.dart';
 import '../screens/transportadoras_screen.dart';
 
-class EncomendaWidget extends StatelessWidget {
+
+class EncomendaWidget extends StatefulWidget {
   final Encomenda encomenda;
 
-  const EncomendaWidget({super.key, required this.encomenda});
+  EncomendaWidget({Key? key, required this.encomenda}) : super(key: key);
 
   @override
+  _EncomendaWidgetState createState() => _EncomendaWidgetState();
+}
+
+class _EncomendaWidgetState extends State<EncomendaWidget> {
+  @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)), // Aumente o valor para arredondar mais as bordas
-      elevation: 5.0,
-      child:
-      ListTile(
-        contentPadding: const EdgeInsets.all(20.0),
-        tileColor: Colors.grey[200],
-        title:
-        Padding( // Adicione este widget
-          padding: const EdgeInsets.only(bottom: 15.0), // Ajuste o valor da margem conforme necessário
-          child: Text(encomenda.nome, style:
-          const TextStyle(
-              fontWeight:
-              FontWeight.bold, fontSize:
-          18.0)),
+    return AnimatedOpacity(
+      opacity: widget.encomenda.isExcluindo ? 0.0 : 1.0,
+      duration: Duration(milliseconds: 500),
+      child: Card(
+        margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
         ),
-        subtitle:
-        Text('Transportadora: ${encomenda.transportadora}\nCódigo de Rastreio: ${encomenda.codigoRastreio}'),
-        trailing:
-        IconButton(icon:
-        const Icon(Icons.delete, color:
-        Colors.grey), onPressed:
-            () {
-          Provider.of<EncomendaModel>(context, listen:
-          false).removerEncomenda(encomenda);
-        }),
-        onTap: () async {
-          Clipboard.setData(ClipboardData(text:
-          encomenda.codigoRastreio));
-          String? url =
-          transportadoras.firstWhere((t) =>
-          t['name'] ==
-              encomenda.transportadora)['transportadoraUrl'];
-          Navigator.push(context, MaterialPageRoute(builder:
-              (context) =>
-              WebViewScreen(url!)));
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Código de rastreio copiado!'),
+        elevation: 5.0,
+        child: ListTile(
+          contentPadding: const EdgeInsets.all(20.0),
+          tileColor: Colors.grey[250],
+          title: Padding(
+            padding: const EdgeInsets.only(bottom: 15.0),
+            child: Text(
+              widget.encomenda.nome,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18.0,
+              ),
             ),
-          );
-        },
+          ),
+          subtitle: Text(
+              'Transportadora: ${widget.encomenda.transportadora}\nCódigo de Rastreio: ${widget.encomenda.codigoRastreio}'),
+          trailing: IconButton(
+            icon: Icon(Icons.delete, color: Colors.grey),
+            onPressed: () {
+              setState(() {
+                widget.encomenda.isExcluindo = true;
+              });
+              Future.delayed(Duration(milliseconds: 300), () {
+                Provider.of<EncomendaModel>(context, listen: false)
+                    .removerEncomenda(widget.encomenda);
+              });
+            },
+          ),
+          onTap: () async {
+            if (widget.encomenda.isExcluindo) return;
+            Clipboard.setData(ClipboardData(text: widget.encomenda.codigoRastreio));
+            String? url = transportadoras
+                .firstWhere((t) => t['name'] == widget.encomenda.transportadora)['transportadoraUrl'];
+            Navigator.push(context, MaterialPageRoute(builder: (context) => WebViewScreen(url!)));
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Código de rastreio copiado!'),
+              ),
+            );
+          },
+        ),
       ),
     );
   }

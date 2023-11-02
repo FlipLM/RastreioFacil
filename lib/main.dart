@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:circular_bottom_navigation/tab_item.dart';
 import 'package:circular_bottom_navigation/circular_bottom_navigation.dart';
+import 'package:rastreios/screens/encomenda.dart';
 import 'package:rastreios/screens/encomenda_model.dart';
 import 'package:rastreios/screens/formulario_screen.dart';
 import 'package:rastreios/screens/minhas_encomendas_screen.dart';
@@ -17,15 +18,15 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Rastreio Fácil',
       theme: ThemeData(
-        primarySwatch: Colors.blueGrey, // Cor da AppBar
-        scaffoldBackgroundColor: const Color.fromRGBO(78, 88, 110, 1), // Cor de fundo de todas as telas
+        primarySwatch: Colors.blueGrey,
+        scaffoldBackgroundColor: const Color.fromRGBO(78, 88, 110, 1),
       ),
       home: const MyHomePage(title: 'Rastreio Fácil'),
     );
@@ -37,7 +38,6 @@ class MyHomePage extends StatefulWidget {
   final String? title;
 
   @override
-  // ignore: library_private_types_in_public_api
   _MyHomePageState createState() => _MyHomePageState();
 }
 
@@ -96,7 +96,12 @@ class _MyHomePageState extends State<MyHomePage> {
               // Tela "Minhas Encomendas"
               const MinhasEncomendasScreen(),
               const TransportadorasScreen(),
-              FormularioEncomendaScreen(Provider.of<EncomendaModel>(context, listen: false).adicionarEncomenda),
+              FormularioEncomendaScreen(
+                adicionarEncomenda: (Encomenda novaEncomenda) {
+                  Provider.of<EncomendaModel>(context, listen: false)
+                      .adicionarEncomenda(novaEncomenda);
+                },
+              ),
             ],
           );
         },

@@ -4,21 +4,30 @@ class Encomenda {
   final String nome;
   final String transportadora;
   final String codigoRastreio;
+  bool isExcluindo;
 
-  Encomenda(this.nome, this.transportadora, this.codigoRastreio);
+  Encomenda({
+    required this.nome,
+    required this.transportadora,
+    required this.codigoRastreio,
+    required this.isExcluindo,
+  });
+
 
   String toJson() => json.encode({
     'nome': nome,
     'transportadora': transportadora,
     'codigoRastreio': codigoRastreio,
+    'isExcluindo': isExcluindo,
   });
 
   static Encomenda fromJson(String jsonString) {
     final jsonData = json.decode(jsonString);
     return Encomenda(
-      jsonData['nome'],
-      jsonData['transportadora'],
-      jsonData['codigoRastreio'],
+      nome: jsonData['nome'],
+      transportadora: jsonData['transportadora'],
+      codigoRastreio: jsonData['codigoRastreio'],
+      isExcluindo: jsonData['isExcluindo'],
     );
   }
 }

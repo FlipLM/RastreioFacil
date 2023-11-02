@@ -4,7 +4,7 @@ import '../screens/encomenda_model.dart';
 import '../widgets/encomenda_widget.dart';
 
 class MinhasEncomendasScreen extends StatelessWidget {
-  const MinhasEncomendasScreen({super.key});
+  const MinhasEncomendasScreen({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,26 +19,25 @@ class MinhasEncomendasScreen extends StatelessWidget {
                 const Text(
                   'Você não tem pacotes adicionados.',
                   style: TextStyle(
-                      color: Colors.white54,
-                      fontSize: 20),
+                    color: Colors.white54,
+                    fontSize: 20,
+                  ),
                 ),
               ],
             ),
           );
         } else {
-          return ListView.builder(
-            itemCount: model.encomendas.length,
-            itemBuilder: (context, index) {
-              final encomenda = model.encomendas[index];
-              return EncomendaWidget(encomenda: encomenda);
-
-            },
+          return Container( // Adicionado um Container para envolver o ListView
+            child: ListView.builder(
+              itemCount: model.encomendas.length,
+              itemBuilder: (context, index) {
+                final encomenda = model.encomendas[index];
+                return EncomendaWidget(encomenda: encomenda);
+              },
+            ),
           );
         }
       },
     );
-
   }
 }
-
-
