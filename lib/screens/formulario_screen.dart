@@ -1,3 +1,5 @@
+//formulario_screen.dart
+
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import '../screens/encomenda.dart';
@@ -37,7 +39,7 @@ class _FormularioEncomendaScreenState extends State<FormularioEncomendaScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         children: <Widget>[
           Container(
             alignment: Alignment.center,
