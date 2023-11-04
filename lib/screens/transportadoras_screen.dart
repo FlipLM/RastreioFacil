@@ -10,6 +10,8 @@ class TransportadorasScreen extends StatefulWidget {
   _TransportadorasScreenState createState() => _TransportadorasScreenState();
 }
 
+
+
 class _TransportadorasScreenState extends State<TransportadorasScreen> {
   @override
   Widget build(BuildContext context) {
@@ -122,7 +124,7 @@ final transportadoras = [
   {
     'imageUrl': 'https://t.ctcdn.com.br/OO4DFvvWLOL2Et-eslajieTnr9g=/1200x675/smart/i535351.jpeg',
     'name': 'Correios',
-    'transportadoraUrl': 'https://rastreamentocorreios.info/',
+    'transportadoraUrl': 'https://www.sitecorreios.com.br/',
   },
   {
     'imageUrl': 'https://www.codecia.com.br/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/l/o/logo_ladlog3.png',

@@ -61,6 +61,25 @@ class _EncomendaWidgetState extends State<EncomendaWidget> {
             Clipboard.setData(ClipboardData(text: widget.encomenda.codigoRastreio));
             String? url = transportadoras
                 .firstWhere((t) => t['name'] == widget.encomenda.transportadora)['transportadoraUrl'];
+
+            switch (widget.encomenda.transportadora) {
+              case "Correios":
+                var urlBase = 'https://app.melhorrastreio.com.br/app/correios/';
+                url = '$urlBase${widget.encomenda.codigoRastreio}';
+                break;
+              case "JadLog":
+                var urlBase = 'https://app.melhorrastreio.com.br/app/correios/jadlog/';
+                url = '$urlBase${widget.encomenda.codigoRastreio}';
+                break;
+              case "Loggi":
+                var urlBase = 'https://app.melhorrastreio.com.br/app/correios/loggi/';
+                url = '$urlBase${widget.encomenda.codigoRastreio}';
+                break;
+            }
+
+
+
+
             Navigator.push(context, MaterialPageRoute(builder: (context) => WebViewScreen(url!)));
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(

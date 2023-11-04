@@ -142,12 +142,16 @@ class _FormularioEncomendaScreenState extends State<FormularioEncomendaScreen> {
                   },
                 );
 
+
+
                 nomeController.clear();
                 codigoRastreioController.clear();
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text('Por favor, selecione uma transportadora.')));
               }
+
+
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Theme.of(context).primaryColor,
